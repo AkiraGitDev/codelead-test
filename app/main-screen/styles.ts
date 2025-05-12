@@ -114,19 +114,103 @@ export const styles = StyleSheet.create({
   postContent: {
     padding: 24,
   },
+  // Estilos para estados de carregamento e erro
+  loadingContainer: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#777777',
+    fontWeight: '500',
+  },
+  errorContainer: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderLeftWidth: 4,
+    borderLeftColor: '#FF5151',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#FF5151',
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  retryText: {
+    fontSize: 14,
+    color: '#7695EC',
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
+  // Estilos para botões de ação
+  actionButtonAlt: {
+    marginLeft: 8,
+  },
+  // Estilos para informações do post
   postInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
   },
   postUsername: {
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#777777',
   },
   postTime: {
+    fontSize: 14,
     color: '#777777',
   },
   postText: {
-    lineHeight: 21,
+    fontSize: 16,
+    color: '#000000',
+    lineHeight: 22,
+  },
+  // Estilos para botões habilitados/desabilitados
+  buttonEnabledStyle: {
+    backgroundColor: '#7695EC',
+  },
+  buttonDisabledStyle: {
+    backgroundColor: '#DDDDDD',
+  },
+  postInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  postUsernameText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#777777',
+  },
+  postTimeText: {
+    fontSize: 14,
+    color: '#777777',
+  },
+  postContextText: {
+    fontSize: 16,
+    color: '#000000',
+    lineHeight: 22,
   },
 });
 
