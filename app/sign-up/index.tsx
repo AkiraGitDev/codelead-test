@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { styles } from './styles';
 
 export default function SignUp() {
@@ -10,6 +10,14 @@ export default function SignUp() {
   const handleUsernameChange = (text: string) => {
     setUsername(text);
     setIsButtonDisabled(text.trim() === '');
+  };
+
+  const handleEnter = () => {
+    // Aqui você pode armazenar o nome de usuário em um estado global ou AsyncStorage
+    console.log('Username:', username);
+    
+    // Navega para a tela main-screen
+    router.push('/main-screen');
   };
 
   return (
@@ -39,7 +47,7 @@ export default function SignUp() {
               isButtonDisabled ? styles.buttonDisabled : styles.buttonEnabled
             ]}
             disabled={isButtonDisabled}
-            onPress={() => console.log('Username:', username)}
+            onPress={handleEnter}
           >
             <Text style={styles.buttonText}>ENTER</Text>
           </TouchableOpacity>
