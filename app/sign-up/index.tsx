@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { styles } from './styles';
 
 export default function SignUp() {
@@ -30,20 +31,38 @@ export default function SignUp() {
     >
       <Stack.Screen options={{ headerShown: false }} />
       
-      <View style={styles.card}>
-        <Text style={styles.title}>Welcome to CodeLeap network!</Text>
+      <Animated.View 
+        style={styles.card}
+        entering={FadeInUp.duration(800).springify()}
+      >
+        <Animated.Text 
+          style={styles.title}
+          entering={FadeInDown.delay(300).duration(800)}
+        >
+          Welcome to CodeLeap network!
+        </Animated.Text>
         
-        <Text style={styles.label}>Please enter your username</Text>
+        <Animated.Text 
+          style={styles.label}
+          entering={FadeInDown.delay(400).duration(800)}
+        >
+          Please enter your username
+        </Animated.Text>
         
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={handleUsernameChange}
-          placeholder="John doe"
-          autoCapitalize="none"
-        />
+        <Animated.View entering={FadeInDown.delay(500).duration(800)}>
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={handleUsernameChange}
+            placeholder="John doe"
+            autoCapitalize="none"
+          />
+        </Animated.View>
         
-        <View style={styles.buttonContainer}>
+        <Animated.View 
+          style={styles.buttonContainer}
+          entering={FadeInDown.delay(600).duration(800)}
+        >
           <TouchableOpacity
             style={[
               styles.button,
@@ -54,8 +73,8 @@ export default function SignUp() {
           >
             <Text style={styles.buttonText}>ENTER</Text>
           </TouchableOpacity>
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </KeyboardAvoidingView>
   );
 }

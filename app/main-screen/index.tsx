@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, { FadeInDown, FadeInUp, FadeOut, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { styles } from './styles';
 import DeleteModal from '@/components/delete-modal';
 import EditModal from '@/components/edit-modal';
@@ -201,7 +202,10 @@ export default function MainScreen() {
       
       <ScrollView style={styles.scrollView}>
         {/* Create Post Form */}
-        <View style={styles.createPostCard}>
+        <Animated.View 
+          style={styles.createPostCard}
+          entering={FadeInUp.springify()}
+        >
           <Text style={styles.createPostTitle}>What's on your mind?</Text>
           
           <Text style={styles.inputLabel}>Title</Text>
@@ -239,7 +243,7 @@ export default function MainScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </Animated.View>
         
         {/* Loading State */}
         {isLoading && (
@@ -259,8 +263,13 @@ export default function MainScreen() {
         )}
         
         {/* Posts List */}
-        {posts.map((post: Post) => (
-          <View key={post.id} style={styles.postCard}>
+        {posts.map((post: Post, index: number) => (
+          <Animated.View 
+            key={post.id} 
+            style={styles.postCard}
+            entering={FadeInDown.delay(index * 100).springify()}
+            exiting={FadeOut}
+          >
             <View style={styles.postHeader}>
               <Text style={styles.postTitle}>{post.title}</Text>
               
@@ -292,7 +301,7 @@ export default function MainScreen() {
               
               <Text style={styles.postText}>{post.content}</Text>
             </View>
-          </View>
+          </Animated.View>
         ))}
       </ScrollView>
 

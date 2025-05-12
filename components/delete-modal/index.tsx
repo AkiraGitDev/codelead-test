@@ -1,5 +1,5 @@
-import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import { styles } from './style';
 
 interface DeleteModalProps {
@@ -16,8 +16,14 @@ export default function DeleteModal({ visible, onCancel, onDelete }: DeleteModal
       visible={visible}
       onRequestClose={onCancel}
     >
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContainer}>
+      <Animated.View 
+        style={styles.modalOverlay}
+        entering={FadeIn.duration(200)}
+      >
+        <Animated.View 
+          style={styles.modalContainer}
+          entering={SlideInDown.springify().damping(15)}
+        >
           <Text style={styles.modalText}>
             Are you sure you want to delete this item?
           </Text>
@@ -37,8 +43,8 @@ export default function DeleteModal({ visible, onCancel, onDelete }: DeleteModal
               <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 }
