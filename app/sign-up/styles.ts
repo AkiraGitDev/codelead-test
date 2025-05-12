@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '@/src/constants/colors';
+import { COLORS } from '../../src/constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
   },
   input: {
-    height: 32,
+    height: 42,
     borderWidth: 1,
     borderColor: '#777777',
     borderRadius: 8,

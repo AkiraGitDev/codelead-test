@@ -28,7 +28,7 @@ export default function SignUp() {
           style={styles.input}
           value={username}
           onChangeText={handleUsernameChange}
-          placeholder="Username"
+          placeholder="John doe"
           autoCapitalize="none"
         />
         
