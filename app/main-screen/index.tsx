@@ -3,14 +3,20 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView } fro
 import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
+import DeleteModal from '@/components/delete-modal';
+import EditModal from '@/components/edit-modal';
 
 export default function MainScreen() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [postToDelete, setPostToDelete] = useState<number | null>(null);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [postToEdit, setPostToEdit] = useState<number | null>(null);
 
   // Dados de exemplo para os posts
-  const posts = [
+  const [posts, setPosts] = useState([
     {
       id: 1,
       title: 'My First Post at CodeLeap Network!',
@@ -27,7 +33,7 @@ export default function MainScreen() {
       timeAgo: '45 minutes ago',
       isOwner: false,
     },
-  ];
+  ]);
 
   const handleInputChange = () => {
     setIsButtonDisabled(title.trim() === '' || content.trim() === '');
@@ -49,6 +55,56 @@ export default function MainScreen() {
     setTitle('');
     setContent('');
     setIsButtonDisabled(true);
+  };
+
+  const openDeleteModal = (postId: number) => {
+    setPostToDelete(postId);
+    setDeleteModalVisible(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalVisible(false);
+    setPostToDelete(null);
+  };
+
+  const handleDeletePost = () => {
+    if (postToDelete !== null) {
+      // Filtra os posts para remover o post com o ID correspondente
+      const updatedPosts = posts.filter(post => post.id !== postToDelete);
+      setPosts(updatedPosts);
+      console.log('Post deletado:', postToDelete);
+      closeDeleteModal();
+    }
+  };
+
+  const openEditModal = (postId: number) => {
+    setPostToEdit(postId);
+    setEditModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalVisible(false);
+    setPostToEdit(null);
+  };
+
+  const handleEditPost = (newTitle: string, newContent: string) => {
+    if (postToEdit !== null) {
+      // Atualiza o post com o ID correspondente
+      const updatedPosts = posts.map(post => {
+        if (post.id === postToEdit) {
+          return {
+            ...post,
+            title: newTitle,
+            content: newContent,
+          };
+        }
+        return post;
+      });
+      
+      setPosts(updatedPosts);
+      console.log('Post editado:', postToEdit, { newTitle, newContent });
+      closeEditModal();
+    }
   };
 
   return (
@@ -108,10 +164,16 @@ export default function MainScreen() {
               
               {post.isOwner && (
                 <View style={styles.postActions}>
-                  <TouchableOpacity style={styles.actionButton}>
+                  <TouchableOpacity 
+                    style={styles.actionButton}
+                    onPress={() => openDeleteModal(post.id)}
+                  >
                     <Ionicons name="trash-outline" size={24} color="#FFFFFF" />
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.actionButton}>
+                  <TouchableOpacity 
+                    style={styles.actionButton}
+                    onPress={() => openEditModal(post.id)}
+                  >
                     <Ionicons name="create-outline" size={24} color="#FFFFFF" />
                   </TouchableOpacity>
                 </View>
@@ -129,6 +191,22 @@ export default function MainScreen() {
           </View>
         ))}
       </ScrollView>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <DeleteModal
+        visible={deleteModalVisible}
+        onCancel={closeDeleteModal}
+        onDelete={handleDeletePost}
+      />
+
+      {/* Modal de Edição */}
+      <EditModal
+        visible={editModalVisible}
+        onCancel={closeEditModal}
+        onSave={handleEditPost}
+        initialTitle={postToEdit !== null ? posts.find(post => post.id === postToEdit)?.title || '' : ''}
+        initialContent={postToEdit !== null ? posts.find(post => post.id === postToEdit)?.content || '' : ''}
+      />
     </SafeAreaView>
   );
 }
