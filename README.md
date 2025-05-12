@@ -50,16 +50,16 @@ npm install
 ```bash
 npx expo start
 ```
-📈 Next Steps
+## 📈 Next Steps
 Planned improvements and future features:
 
-👍 Likes, Comments, and @Mentions functionality
+- 👍 Likes, Comments, and @Mentions functionality
 
-🔍 Sorting and filtering options for posts
+- 🔍 Sorting and filtering options for posts
 
-📄 Pagination for improved performance with large data sets
+- 📄 Pagination for improved performance with large data sets
 
-🤝 Contact
+## 🤝 Contact
 If you have any questions or would like to discuss anything related to this project:
 
 LinkedIn: https://www.linkedin.com/in/akiradeveloper/
