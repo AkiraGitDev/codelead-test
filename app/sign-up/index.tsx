@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { styles } from './styles';
+import { saveUser, setCurrentUser } from '@/services/users-posts';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');
@@ -12,12 +13,14 @@ export default function SignUp() {
     setIsButtonDisabled(text.trim() === '');
   };
 
-  const handleEnter = () => {
-    // Aqui você pode armazenar o nome de usuário em um estado global ou AsyncStorage
-    console.log('Username:', username);
-    
-    // Navega para a tela main-screen
-    router.push('/main-screen');
+  const handleEnter = async () => {
+    try {
+      const user = await saveUser(username);
+      await setCurrentUser(user);
+      router.push('/main-screen');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+    }
   };
 
   return (
