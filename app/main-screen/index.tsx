@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { Stack, router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './styles';
 import DeleteModal from '@/components/delete-modal';
 import EditModal from '@/components/edit-modal';
-import { Post } from '@/services/api';
 import { usePosts, useCreatePost, useUpdatePost, useDeletePost } from '@/hooks/usePosts';
+import { Post } from '@/services/api';
 
 export default function MainScreen() {
   const [title, setTitle] = useState('');
@@ -18,32 +17,25 @@ export default function MainScreen() {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [postToEdit, setPostToEdit] = useState<number | null>(null);
   const [username, setUsername] = useState<string>('');
+  
+  // Obter parâmetros da rota
+  const params = useLocalSearchParams();
 
   // Hooks do React Query
-  const { data: posts = [], isLoading, error } = usePosts();
+  const { data: posts = [], isLoading, error, refetch } = usePosts();
   const createPostMutation = useCreatePost();
   const updatePostMutation = useUpdatePost();
   const deletePostMutation = useDeletePost();
 
-  // Carregar o nome de usuário
+  // Carregar o nome de usuário dos parâmetros da rota
   useEffect(() => {
-    const loadUsername = async () => {
-      try {
-        const storedUsername = await AsyncStorage.getItem('@codelead:username');
-        if (!storedUsername) {
-          // Se não houver nome de usuário, redirecionar para a tela de login
-          router.replace('/sign-up');
-          return;
-        }
-        setUsername(storedUsername);
-      } catch (error) {
-        console.error('Erro ao carregar nome de usuário:', error);
-        Alert.alert('Erro', 'Não foi possível carregar os dados. Tente novamente mais tarde.');
-      }
-    };
-    
-    loadUsername();
-  }, []);
+    if (params.username) {
+      setUsername(params.username as string);
+    } else {
+      // Se não houver nome de usuário, redirecionar para a tela de login
+      router.replace('/sign-up');
+    }
+  }, [params]);
 
   const handleInputChange = () => {
     setIsButtonDisabled(title.trim() === '' || content.trim() === '');
@@ -144,25 +136,58 @@ export default function MainScreen() {
   // Formatar data relativa
   const formatRelativeTime = (dateString: string) => {
     const now = new Date();
-    const date = new Date(dateString);
-    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const postDate = new Date(dateString);
     
-    if (diffInSeconds < 60) {
-      return `${diffInSeconds} segundos atrás`;
+    // Verificar se a data é válida
+    if (isNaN(postDate.getTime())) {
+      return '';
     }
     
+    // Calcular a diferença em segundos
+    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
+    
+    if (diffInSeconds < 0) {
+      return 'agora mesmo';
+    }
+    
+    // Menos de um minuto
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} segundo${diffInSeconds !== 1 ? 's' : ''} atrás`;
+    }
+    
+    // Menos de uma hora
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     if (diffInMinutes < 60) {
-      return `${diffInMinutes} minutos atrás`;
+      return `${diffInMinutes} minuto${diffInMinutes !== 1 ? 's' : ''} atrás`;
     }
     
+    // Menos de um dia
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) {
-      return `${diffInHours} horas atrás`;
+      return `${diffInHours} hora${diffInHours !== 1 ? 's' : ''} atrás`;
     }
     
+    // Menos de uma semana
     const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays} dias atrás`;
+    if (diffInDays < 7) {
+      return `${diffInDays} dia${diffInDays !== 1 ? 's' : ''} atrás`;
+    }
+    
+    // Menos de um mês
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks < 4) {
+      return `${diffInWeeks} semana${diffInWeeks !== 1 ? 's' : ''} atrás`;
+    }
+    
+    // Menos de um ano
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+      return `${diffInMonths} mês${diffInMonths !== 1 ? 'es' : ''} atrás`;
+    }
+    
+    // Mais de um ano
+    const diffInYears = Math.floor(diffInDays / 365);
+    return `${diffInYears} ano${diffInYears !== 1 ? 's' : ''} atrás`;
   };
 
   return (
@@ -227,14 +252,14 @@ export default function MainScreen() {
         {error && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>Erro ao carregar posts. Tente novamente.</Text>
-            <TouchableOpacity onPress={() => usePosts().refetch()}>
+            <TouchableOpacity onPress={() => refetch()}>
               <Text style={styles.retryText}>Tentar novamente</Text>
             </TouchableOpacity>
           </View>
         )}
         
         {/* Posts List */}
-        {posts.map((post) => (
+        {posts.map((post: Post) => (
           <View key={post.id} style={styles.postCard}>
             <View style={styles.postHeader}>
               <Text style={styles.postTitle}>{post.title}</Text>
@@ -242,14 +267,14 @@ export default function MainScreen() {
               {post.username === username && (
                 <View style={styles.postActions}>
                   <TouchableOpacity 
-                    style={styles.actionButton}
-                    onPress={() => post.id && openDeleteModal(post.id)}
+                    style={styles.actionButtonAlt}
+                    onPress={() => post.id && openDeleteModal(Number(post.id))}
                   >
                     <Ionicons name="trash-outline" size={24} color="#FFFFFF" />
                   </TouchableOpacity>
                   <TouchableOpacity 
-                    style={styles.actionButton}
-                    onPress={() => post.id && openEditModal(post.id)}
+                    style={styles.actionButtonAlt}
+                    onPress={() => post.id && openEditModal(Number(post.id))}
                   >
                     <Ionicons name="create-outline" size={24} color="#FFFFFF" />
                   </TouchableOpacity>

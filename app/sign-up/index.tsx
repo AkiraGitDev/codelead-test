@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { Stack, router } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './styles';
-import { saveUser, setCurrentUser } from '@/services/users-posts';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');
@@ -16,9 +14,10 @@ export default function SignUp() {
 
   const handleEnter = async () => {
     try {
-      // Salvar o nome de usuário no AsyncStorage
-      await AsyncStorage.setItem('@codelead:username', username);
-      router.push('/main-screen');
+      router.push({
+        pathname: '/main-screen',
+        params: { username }
+      });
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }

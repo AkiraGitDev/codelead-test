@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchPosts, createPost, updatePost, deletePost, queryKeys, Post } from '@/services/api';
+import { fetchPosts, createPost, updatePost, deletePost, queryKeys } from '@/services/api';
 
 // Hook para buscar todos os posts
 export const usePosts = () => {
@@ -32,7 +32,7 @@ export const useUpdatePost = () => {
       // Invalidar a consulta de posts para recarregar os dados
       queryClient.invalidateQueries({ queryKey: queryKeys.posts });
       if (data.id) {
-        queryClient.invalidateQueries({ queryKey: queryKeys.post(data.id) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.post(Number(data.id)) });
       }
     },
   });
@@ -43,7 +43,7 @@ export const useDeletePost = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: deletePost,
+    mutationFn: (id: number) => deletePost(Number(id)),
     onSuccess: () => {
       // Invalidar a consulta de posts para recarregar os dados
       queryClient.invalidateQueries({ queryKey: queryKeys.posts });
