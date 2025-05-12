@@ -12,9 +12,9 @@ export const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
-    padding: 24,
-    width: '100%',
-    maxWidth: 500,
+    padding: 20,
+    width: '80%',
+    maxWidth: 350,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -22,14 +22,15 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   modalText: {
-    fontSize: 22,
-    marginBottom: 24,
+    fontSize: 16,
+    marginBottom: 20,
+    fontWeight: '500',
     textAlign: 'center',
   },
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 16,
+    gap: 14,
   },
   modalButton: {
     paddingVertical: 7,
