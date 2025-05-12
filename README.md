@@ -25,6 +25,10 @@ The application was built using **React Native** with **Expo** and **TypeScript*
 - [Expo](https://expo.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 
+## 📸 Screenshots
+![image](https://github.com/user-attachments/assets/8f2ed350-74b3-4862-85c8-445f67b3acc0)
+![image](https://github.com/user-attachments/assets/8d95cfcb-e031-434e-9d80-a30e7268fab3)
+
 ## 📦 Getting Started
 
 To run the project locally:
@@ -46,6 +50,15 @@ npm install
 ```bash
 npx expo start
 ```
+📈 Next Steps
+Planned improvements and future features:
+
+👍 Likes, Comments, and @Mentions functionality
+
+🔍 Sorting and filtering options for posts
+
+📄 Pagination for improved performance with large data sets
+
 🤝 Contact
 If you have any questions or would like to discuss anything related to this project:
 
