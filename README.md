@@ -1,67 +1,82 @@
-# CodeLeap Technical Challenge
+# 🧪 CodeLeap Technical Challenge
 
-This is a simple mobile application developed as part of the **CodeLeap Technical Challenge**. The main goal of the project was to create a native mobile app capable of performing basic CRUD (Create, Read, Update, Delete) operations.
+> **Desafio técnico** da CodeLeap: construir um app mobile com **CRUD completo** de posts, foco em responsividade, animações e boa experiência do usuário. Construído com React Native + Expo + TypeScript.
 
-## 📱 Project Overview
-
-The application was built using **React Native** with **Expo** and **TypeScript**, ensuring fast development and a great developer experience. It is fully responsive across different screen sizes and includes smooth animations and transitions for an enhanced user experience.
-
-## 🚀 Features
-
-- Create a new post
-- View a list of posts
-- Edit a post
-- Delete a post
-
-## ✅ Bonus Points Implemented
-
-- ✅ Mobile responsiveness
-- ✅ Pretty animations and transitions
-- ✅ Hover effects (where applicable in mobile interactions)
-
-## 🛠️ Technologies
-
-- [React Native](https://reactnative.dev/)
-- [Expo](https://expo.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+<p>
+  <img src="https://img.shields.io/badge/React_Native-61DAFB?logo=react&logoColor=000" />
+  <img src="https://img.shields.io/badge/Expo-000020?logo=expo&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/CRUD-informational" />
+</p>
 
 ## 📸 Screenshots
-![image](https://github.com/user-attachments/assets/8f2ed350-74b3-4862-85c8-445f67b3acc0)
-![image](https://github.com/user-attachments/assets/8d95cfcb-e031-434e-9d80-a30e7268fab3)
 
-## 📦 Getting Started
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8f2ed350-74b3-4862-85c8-445f67b3acc0" width="300" />
+  <img src="https://github.com/user-attachments/assets/8d95cfcb-e031-434e-9d80-a30e7268fab3" width="300" />
+</p>
 
-To run the project locally:
+## ✨ Funcionalidades
 
-1. **Clone the repository**
+- ➕ **Create** — criar um novo post
+- 📋 **Read** — listar todos os posts
+- ✏️ **Update** — editar um post existente
+- 🗑️ **Delete** — remover um post
+- 🎞 **Animações e transições suaves**
+- 📱 **Totalmente responsivo** entre diferentes tamanhos de tela
+
+## 🛠 Stack
+
+- [React Native](https://reactnative.dev/) + [Expo](https://expo.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- Estrutura organizada em `components`, `hooks` e `services`
+
+## 🧩 Decisões de projeto
+
+- **Separação em `services`** para isolar a camada de requisições HTTP do restante do app.
+- **Hooks customizados** para lógica reutilizável de posts (criar, listar, editar, deletar).
+- Foco em **feedback visual** (animações e estados de loading) por ser um critério do desafio.
+
+## 🚀 Como rodar
 
 ```bash
-git clone https://github.com/AkiraGitDev/codeleap-test.git
-cd codeleap-test
-```
+# 1. Clone o repositório
+git clone https://github.com/AkiraGitDev/codelead-test.git
+cd codelead-test
 
-2. **Install dependencies**
-
-```bash
+# 2. Instale as dependências
 npm install
-```
-3. **Run Project**
 
-```bash
+# 3. Inicie o bundler do Expo
 npx expo start
 ```
-## 📈 Next Steps
-Planned improvements and future features:
 
-- 👍 Likes, Comments, and @Mentions functionality
+Depois escaneie o QR Code com o **Expo Go** ou rode em um emulador Android/iOS.
 
-- 🔍 Sorting and filtering options for posts
+## 📁 Estrutura
 
-- 📄 Pagination for improved performance with large data sets
+```text
+/app         # Rotas (Expo Router)
+/components  # Componentes reutilizáveis
+/hooks       # Hooks customizados
+/services    # Comunicação com a API
+/src         # Lógica adicional
+```
 
-## 🤝 Contact
-If you have any questions or would like to discuss anything related to this project:
+## 🗺 Próximos passos
 
-LinkedIn: https://www.linkedin.com/in/akiradeveloper/
+- 👍 Likes, comentários e @mentions
+- 🔍 Ordenação e filtro de posts
+- 📄 Paginação para listas grandes
 
-Email: thiagoakira00@gmail.com
+## 🧠 O que aprendi
+
+- Estruturar um app mobile seguindo requisitos de um desafio técnico real
+- Trabalhar com animações no React Native
+- Separar responsabilidades em services e hooks
+- Entregar um projeto dentro do prazo com um escopo bem definido
+
+## 🤝 Contato
+
+- 💼 [LinkedIn](https://www.linkedin.com/in/akiradeveloper/)
+- ✉️ thiagoakira00@gmail.com
